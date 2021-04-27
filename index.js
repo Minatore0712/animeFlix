@@ -12,16 +12,54 @@ app.use((err, req, res, next) => {
 
 let topMovies = [
   {
-    title: "Harry Potter and the Sorcerer's Stone",
-    author: "J.K. Rowling",
+    title: "A Silent Voice",
+    release: "2016",
+    genre: "Drama",
   },
   {
-    title: "Lord of the Rings",
-    author: "J.R.R. Tolkien",
+    title: "Princess Mononoke",
+    release: "1997",
+    genre: "Fantasy",
   },
   {
-    title: "Twilight",
-    author: "Stephanie Meyer",
+    title: "Your Name",
+    release: "2016",
+    genre: "Fantasy",
+  },
+  {
+    title: "Spirited Away",
+    release: "2001",
+    genre: "Fantasy, Drama",
+  },
+  {
+    title: "My Neighbour Totoro",
+    release: "1988",
+    genre: "Fantasy",
+  },
+  {
+    title: "Howl’s Moving Castle",
+    release: "2004",
+    genre: "Fantasy",
+  },
+  {
+    title: "Hotarubi no Mori e",
+    release: "2002",
+    genre: "Romance",
+  },
+  {
+    title: "Violet Evergarden",
+    release: "2018",
+    genre: "Drama",
+  },
+  {
+    title: "The Garden of Words",
+    release: "2013",
+    genre: "Drama, Romance",
+  },
+  {
+    title: "Weathering with You",
+    release: "2020",
+    genre: "Drama, Romance",
   },
 ];
 
