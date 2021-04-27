@@ -11,3 +11,4 @@ A web application that provides users with access to information about different
 - body-parser
 - express 
 - lodash
+- morgan
