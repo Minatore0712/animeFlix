@@ -5,14 +5,141 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <title>Documentation</title>
 </head>
 
 <body>
 
     <h1>animeFLix</h1>
-    <p>A web application that provides users with access to information about different Anime movies, directors and genres. Users are able to register, update their personal information and create a list of their favorite movies.</p>
+    <p>A web application that provides users with access to information about different Anime movies, directors and
+        genres. Users are able to register, update their personal information and create a list of their favorite
+        movies.</p>
 
+    <table>
+        <tr>
+            <th>Request</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>URL parameters</th>
+            <th>Request body data format</th>
+            <th>Respond body data format</th>
+        </tr>
+        <tr>
+            <td>Get a list of ALL movies</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td></td>
+            <td>None</td>
+            <td>A JSON object holding data about all movies</td>
+        </tr>
+        <tr>
+            <td>Get data about a single movie by
+                title</td>
+            <td>/movies/[Title]</td>
+            <td>GET</td>
+            <td>/movies/:Title</td>
+            <td>None</td>
+            <td>A JSON object holding data about a single movie containing a title, description, genre, director, image
+                and featured. <br><br>
+                Example: <br>
+                <code>
+                { <br>
+                "title": "Violet Evergarden", <br>
+                "description": "Violet Evergarden, the child soldier turned Auto Memory Doll, writes letters that evoke the words her clients can't. But when a terminally ill boy requests her services for her family, her own feelings about love and loss resurface.", <br> <br>
+                "director": "Taichi Ishidate", <br>
+                "genre":"Drama", <br>
+                "image": "violet.png", <br>
+                "featured": true <br>
+                }</code><br>
+            </td>
+        </tr>
+        <tr>
+            <td>Get data about a movie genre by name</td>
+            <td>/movies/genres/[Genre]</td>
+            <td>GET</td>
+            <td>/movies/genres/:Genre</td>
+            <td>None</td>
+            <td>A JSON object holding data about the genre</td>
+        </tr>
+        <tr>
+            <td>Get data about a movie director by name</td>
+            <td>/movies/directors/[Name]</td>
+            <td>GET</td>
+            <td>/movies/directors/:Name</td>
+            <td>None</td>
+            <td>A JSON object holding data about the director</td>
+        </tr>
+        <tr>
+            <td>Register new user</td>
+            <td>/users</td>
+            <td>POST</td>
+            <td></td>
+            <td>A JSON object holding data about the user to create. <br> Example: <br> {
+                <br>ID: Integer,
+                <br>Username: String (required),
+                <br>Password: String (required),
+                <br>Email: String (required),
+                <br>Birthday: Date
+                <br>}
+            </td>
+            <td>A JSON object holding data about the user that was added.
+                <br>Example: <br> <code> { <br>
+                "_id": "607467938f1de1634b2326d4",<br>
+                "Username": "Maria",<br>
+                "Password": "password",<br>
+                "Email": "maria@web.de",<br>
+                "Birthday": "1992-08-02"<br>
+                }</code>
+            </td>
+        </tr>
+        <tr>
+            <td>Update a user information</td>
+            <td>/users/[Username]</td>
+            <td>PUT</td>
+            <td>/users/:username</td>
+            <td>a JSON object holding data about the user to update. <br> Example: <br> <code> charset="{
+                "Username": "Maria",<br>
+                "Password": <strong>"password2"</strong>,<br>
+                "Email": "maria@web.de",<br>
+                "Birthday" : "1992-08-02"<br>
+                }"</code></td>
+            <td> a JSON object holding data about the user (including the updated data) <br> Example: <code> <br> charset="{
+                "FavoriteMovies": [],<br>
+                "_id": "607467938f1de1634b2326d4",<br>
+                "Username": "Maria",<br>
+                "Password": <strong>"Password2"</strong>,<br>
+                "Email": "maria@web.de",<br>
+                "Birthday" : "1992-08-02"</code><br></td>
+        </tr>
+        <tr>
+            <td>Add a movie to Favourites </td>
+            <td>/users/[Username]/favourites/[MovieID]</td>
+            <td>POST</td>
+            <td>/users/:username/favourites/:MovieID</td>
+            <td>None</td>
+            <td>A JSON object holding data about the movie that was added to the favourites Movie list. <br>
+                Example:<br> { “title” : “Violet Evergarden"}</td>
+        </tr>
+        <tr>
+            <td>Remove movie from Favourites</td>
+            <td>/users/[Username]/favourites/[MovieID]</td>
+            <td>DELETE</td>
+            <td>/users/:username/favourites/:MovieID</td>
+            <td>None</td>
+            <td>A JSON object holding data about the updated favorite Movies list.</td>
+        </tr>
+        <tr>
+            <td>Unregister an existing user</td>
+            <td>/users/[Username]</td>
+            <td>DELETE</td>
+            <td>/users/:username</td>
+            <td>None</td>
+            <td>A text message indicating whether the user was successfully deleted</td>
+        </tr>
+    </table>
 </body>
 
 </html>

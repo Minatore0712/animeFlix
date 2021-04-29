@@ -1,0 +1,26 @@
+body {
+  font-family: "Roboto";
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+table,
+th,
+td {
+  border: 1px solid rgba(0, 0, 0, 0.068);
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 7px;
+}
+
+th {
+  background-color: #5cbea3;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f252;
+}
