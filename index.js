@@ -12,7 +12,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-let topMovies = [
+let movies = [
   {
     title: "A Silent Voice",
     release: "2016",
@@ -40,7 +40,7 @@ let topMovies = [
   {
     title: "Spirited Away",
     release: "2001",
-    genre: "Fantasy, Drama",
+    genre: "Fantasy",
     description:
       "Spirited Away tells the story of Chihiro Ogino (Hiiragi), a 10-year-old girl who, while moving to a new neighbourhood, enters the world of Kami",
     featured: "true",
@@ -80,7 +80,7 @@ let topMovies = [
   {
     title: "The Garden of Words",
     release: "2013",
-    genre: "Drama, Romance",
+    genre: "Romance",
     description:
       "The film focuses on Takao Akizuki, an aspiring 15-year-old shoemaker, and Yukari Yukino, a mysterious 27-year-old woman he keeps meeting at Shinjuku Gyoen National Garden on rainy mornings.",
     featured: "true",
@@ -88,7 +88,7 @@ let topMovies = [
   {
     title: "Weathering with You",
     release: "2020",
-    genre: "Drama, Romance",
+    genre: "Romance",
     description:
       " Weathering with you depicts a high school boy who runs away from his rural home to Tokyo and befriends an orphan girl who has the ability to manipulate the weather.",
     featured: "true",
@@ -101,15 +101,20 @@ app.get("/", (req, res) => {
 });
 
 app.get("/movies", (req, res) => {
-  res.json(topMovies);
+  res.json(movies);
 });
 
-app.get("/movies/:title", (req, res) => {
-  res.json(topMovies);
+app.get("/movies/title/:title", (req, res) => {
+  res.json(
+    movies.find((movie) => {
+      return movie.title === req.params.title;
+    })
+  );
 });
 
 app.get("/movies/genre/:genre", (req, res) => {
-  res.json(topMovies);
+  let responseText = "Genre";
+  res.send(responseText);
 });
 
 app.get("/movies/directors/:name", (req, res) => {
