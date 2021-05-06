@@ -51,7 +51,7 @@ app.get("/movies/:Title", (req, res) => {
 
 // Get a movie by genre
 app.get("/genre/:Name", (req, res) => {
-  Genres.findOne({ Name: req.params.Name })
+  Movies.find({ "Genre.Name": req.params.Name })
     .then((genre) => {
       res.json(genre);
     })
@@ -63,7 +63,7 @@ app.get("/genre/:Name", (req, res) => {
 
 // Get a director by name
 app.get("/director/:Name", (req, res) => {
-  Directors.findOne({ Name: req.params.Name })
+  Movies.find({ "Director.Name": req.params.Name })
     .then((director) => {
       res.json(director);
     })
@@ -146,18 +146,21 @@ app.post("/users/:Username/Movies/:MovieID", (req, res) => {
 
 // Delete a movie from a user's list of favorites
 app.delete("/users/:Username/Movies/:MovieID", (req, res) => {
-  Users.findOneAndRemove({ FavoriteMovies: req.params.MovieID })
-    .then((user) => {
-      if (!user) {
-        res.status(400).send(req.params.Username + " was not found");
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $pull: { FavoriteMovies: req.params.MovieID },
+    },
+    { new: true }, // This line makes sure that the updated document is returned
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
       } else {
-        res.status(200).send(req.params.Username + " was deleted.");
+        res.json(updatedUser);
       }
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
+    }
+  );
 });
 
 // Delete a user by username
