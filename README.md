@@ -6,9 +6,24 @@ A web application that provides users with access to information about different
 
 - ESLint
 
+# Database
+
+MongoDB
+
+
+# Used ODM
+
+Mongoose
+
 # Runtime dependencies
 
 - body-parser
 - express 
 - lodash
 - morgan
+- jsonwebtoken
+- mongoose 
+- nodemon
+- passport
+- passport-jwt
+- passport-local
