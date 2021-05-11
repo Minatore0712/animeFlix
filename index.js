@@ -14,7 +14,6 @@ const cors = require("cors");
 const { check, validationResult } = require("express-validator");
 
 const app = express();
-const port = process.env.CONNECTION_URI || 8080;
 
 let allowedOrigins = ["http://localhost:7070", "http://testsite.com"];
 
