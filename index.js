@@ -150,6 +150,11 @@ app.post(
   }
 );
 
+app.get("/", (req, res) => {
+  let responseText = "Welcome to AnimeFlix!";
+  res.send(responseText);
+});
+
 // Update a user's info, by username
 app.put(
   "/users/:Username",
