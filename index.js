@@ -9,7 +9,7 @@ const Users = Models.User;
 const Genres = Models.Genre;
 const Directors = Models.Director;
 const passport = require("passport");
-require("./passport");
+require("./helpers/passport");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -27,7 +27,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
-let auth = require("./auth")(app);
+let auth = require("./middelwares/auth")(app);
 
 // Get a movie by title
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -70,7 +70,7 @@ app.post("/users", (req, res) => {
   Users.findOne({ Username: req.params.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + "already exists");
+        return res.status(409).send(req.body.Username + "already exists");
       } else {
         Users.create({
           Username: req.body.Username,
@@ -171,10 +171,11 @@ app.delete("/users/:Username", passport.authenticate('jwt', { session: false }),
     });
 });
 
+//get all movies
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
     .then((movies) => {
-      res.status(201).json(movies);
+      res.status(200).json(movies);
     })
     .catch((error) => {
       console.error(error);
