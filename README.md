@@ -17,6 +17,8 @@ Mongoose
 
 # Runtime dependencies
 
+- express-validator
+- bcrypt
 - body-parser
 - express 
 - lodash
