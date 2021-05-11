@@ -14,7 +14,7 @@ const cors = require("cors");
 const { check, validationResult } = require("express-validator");
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.CONNECTION_URI || 8080;
 
 let allowedOrigins = ["http://localhost:7070", "http://testsite.com"];
 
@@ -34,7 +34,12 @@ app.use(
   })
 );
 
-mongoose.connect("mongodb://localhost:27017/animeFlixDB", {
+// mongoose.connect("mongodb://localhost:27017/animeFlixDB", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -99,14 +104,18 @@ app.get(
 );
 
 // Register user
-app.post('/users',
+app.post(
+  "/users",
   [
-    check('Username', 'Username is required').isLength({min: 5}),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail()
-  ], (req, res) => {
-
+    check("Username", "Username is required").isLength({ min: 5 }),
+    check(
+      "Username",
+      "Username contains non alphanumeric characters - not allowed."
+    ).isAlphanumeric(),
+    check("Password", "Password is required").not().isEmpty(),
+    check("Email", "Email does not appear to be valid").isEmail(),
+  ],
+  (req, res) => {
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -117,27 +126,29 @@ app.post('/users',
     Users.findOne({ Username: req.body.Username })
       .then((user) => {
         if (user) {
-          return res.status(400).send(req.body.Username + ' already exists');
+          return res.status(400).send(req.body.Username + " already exists");
         } else {
-          Users
-            .create({
-              Username: req.body.Username,
-              Password: hashedPassword,
-              Email: req.body.Email,
-              Birthday: req.body.Birthday
+          Users.create({
+            Username: req.body.Username,
+            Password: hashedPassword,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday,
+          })
+            .then((user) => {
+              res.status(201).json(user);
             })
-            .then((user) => { res.status(201).json(user) })
             .catch((error) => {
               console.error(error);
-              res.status(500).send('Error: ' + error);
+              res.status(500).send("Error: " + error);
             });
         }
       })
       .catch((error) => {
         console.error(error);
-        res.status(500).send('Error: ' + error);
+        res.status(500).send("Error: " + error);
       });
-  });
+  }
+);
 
 // Update a user's info, by username
 app.put(
@@ -249,6 +260,6 @@ app.get(
   }
 );
 
-app.listen(port, '0.0.0.0',() => {
+app.listen(port, "0.0.0.0", () => {
   console.log("Your app is listening on port" + port);
 });
