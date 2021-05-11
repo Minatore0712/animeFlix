@@ -19,6 +19,12 @@ app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
 
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+
 let allowedOrigins = ["http://localhost:7070", "http://testsite.com"];
 
 app.use(
@@ -41,11 +47,6 @@ app.use(
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
-
-mongoose.connect(process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
 
 app.use(cors());
 app.use(bodyParser.json());
