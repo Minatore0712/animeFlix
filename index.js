@@ -19,11 +19,6 @@ app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
 });
 
-mongoose
-     .connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
-     .then(() => console.log( 'Database Connected' ))
-     .catch(err => console.log( err ));
-
 let allowedOrigins = ["http://localhost:7070", "http://testsite.com"];
 
 app.use(
@@ -41,6 +36,11 @@ app.use(
     },
   })
 );
+
+mongoose
+     .connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+     .then(() => console.log( 'Database Connected' ))
+     .catch(err => console.log( err ));
 
 // mongoose.connect("mongodb://localhost:27017/animeFlixDB", {
 //   useNewUrlParser: true,
