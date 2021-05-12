@@ -15,15 +15,14 @@ const { check, validationResult } = require("express-validator");
 
 const app = express();
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0',() => {
- console.log('Listening on Port ' + port);
+app.listen(port, "0.0.0.0", () => {
+  console.log("Listening on Port " + port);
 });
 
-mongoose.connect(process.env.CONNECTION_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
+mongoose
+     .connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+     .then(() => console.log( 'Database Connected' ))
+     .catch(err => console.log( err ));
 
 let allowedOrigins = ["http://localhost:7070", "http://testsite.com"];
 
