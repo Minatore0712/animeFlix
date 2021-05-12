@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 morgan = require("morgan");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const Models = require("./database/models");
 
 const Movies = Models.Movie;
@@ -14,32 +14,10 @@ const cors = require("cors");
 const { check, validationResult } = require("express-validator");
 
 const app = express();
-
 const port = process.env.PORT || 8080;
 app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
 });
-
-// Connected to Cluster Atlas MongoDB
-require("dotenv").config();
-const mongoose = require("mongoose");
-
-const uri = process.env.MONGODB_URI;
-mongoose
-  .connect(uri, {
-    useCreateIndex: true,
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-  })
-  .then((x) => {
-    console.log(
-      `Connected to Mongo! Database name: "${x.connections[0].name}"`
-    );
-  })
-  .catch((err) => {
-    console.error("Error connecting to mongo", err);
-  });
 
 let allowedOrigins = ["http://localhost:7070", "http://testsite.com"];
 
@@ -59,10 +37,10 @@ app.use(
   })
 );
 
-// mongoose
-//      .connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
-//      .then(() => console.log( 'Database Connected' ))
-//      .catch(err => console.log( err ));
+mongoose
+     .connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+     .then(() => console.log( 'Database Connected' ))
+     .catch(err => console.log( err ));
 
 // mongoose.connect("mongodb://localhost:27017/animeFlixDB", {
 //   useNewUrlParser: true,
