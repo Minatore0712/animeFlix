@@ -37,10 +37,10 @@ app.use(
   })
 );
 
-mongoose
-     .connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
-     .then(() => console.log( 'Database Connected' ))
-     .catch(err => console.log( err ));
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 // mongoose.connect("mongodb://localhost:27017/animeFlixDB", {
 //   useNewUrlParser: true,
