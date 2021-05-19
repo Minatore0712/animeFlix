@@ -1,6 +1,6 @@
-# AnimeFlix - Webapp
+# AnimeFlix - Backend
 
-A web application that provides users with access to information about different Anime movies, directors and genres. Users are able to register, update their personal information and create a list of their favorite movies.
+This is the Backend for a web application that provides users with access to information about different Anime movies, directors and genres. Users are able to register, update their personal information and create a list of their favorite movies.
 
 Your can find my Documentation [here.](https://anime-flix-db.herokuapp.com/users)
  
@@ -11,7 +11,6 @@ Your can find my Documentation [here.](https://anime-flix-db.herokuapp.com/users
 # Database
 
 MongoDB
-
 
 # Used ODM
 
