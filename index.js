@@ -19,7 +19,7 @@ app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
 });
 
-let allowedOrigins = ["http://localhost:7070", "http://testsite.com"];
+let allowedOrigins = ["http://localhost:7070", "http://localhost:1234"];
 
 app.use(
   cors({
