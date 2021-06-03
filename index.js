@@ -12,6 +12,7 @@ const passport = require("passport");
 require("./helpers/passport");
 const cors = require("cors");
 const { check, validationResult } = require("express-validator");
+const { response } = require("express");
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -173,7 +174,7 @@ app.put(
           Birthday: req.body.Birthday,
         },
       },
-      { new: true }, // This line makes sure that the updated document is returned
+      { new: true },
       (err, updatedUser) => {
         if (err) {
           console.error(err);
@@ -183,6 +184,21 @@ app.put(
         }
       }
     );
+  }
+);
+
+// Get user's info, by username
+app.get(
+  "/users/:Username",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Users.findOne({ Username: req.body.Username }).then((user) => {
+      if (user) {
+        res.status(200).send(user);
+      } else {
+        res.status(404).send("User not found");
+      }
+    });
   }
 );
 
