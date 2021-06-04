@@ -210,28 +210,21 @@ app.post(
     const username = req.params.Username;
     const movieId = req.params.MovieID;
 
-    Users.findOne({ Username: username }).then((user) => {
-      const idx = user.FavoriteMovies.findIndex(movieId);
-      if (idx < 0) {
-        Users.findOneAndUpdate(
-          { Username: username },
-          {
-            $push: { FavoriteMovies: movieId },
-          },
-          { new: true }, // This line makes sure that the updated document is returned
-          (err, updatedUser) => {
-            if (err) {
-              console.error(err);
-              res.status(500).send("Error: " + err);
-            } else {
-              res.status(201).json(updatedUser);
-            }
-          }
-        );
-      } else {
-        res.status(409).send("Movie already favorited");
+    Users.findOneAndUpdate(
+      { Username: username },
+      {
+        $push: { FavoriteMovies: movieId },
+      },
+      { new: true }, // This line makes sure that the updated document is returned
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Error: " + err);
+        } else {
+          res.status(201).json(updatedUser);
+        }
       }
-    });
+    );
   }
 );
 
