@@ -207,21 +207,31 @@ app.post(
   "/users/:Username/Movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      {
-        $push: { FavoriteMovies: req.params.MovieID },
-      },
-      { new: true }, // This line makes sure that the updated document is returned
-      (err, updatedUser) => {
-        if (err) {
-          console.error(err);
-          res.status(500).send("Error: " + err);
-        } else {
-          res.status(201).json(updatedUser);
-        }
+    const username = req.params.Username;
+    const movieId = req.params.MovieID;
+
+    Users.findOne({ Username: username }).then((user) => {
+      const idx = user.FavoriteMovies.findIndex(movieId);
+      if (idx < 0) {
+        Users.findOneAndUpdate(
+          { Username: username },
+          {
+            $push: { FavoriteMovies: movieId },
+          },
+          { new: true }, // This line makes sure that the updated document is returned
+          (err, updatedUser) => {
+            if (err) {
+              console.error(err);
+              res.status(500).send("Error: " + err);
+            } else {
+              res.status(201).json(updatedUser);
+            }
+          }
+        );
+      } else {
+        res.status(409).send("Movie already favorited");
       }
-    );
+    });
   }
 );
 
@@ -253,12 +263,13 @@ app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Users.findOneAndRemove({ Username: req.params.Username })
+    const username = req.params.Username;
+    Users.findOneAndRemove({ Username: username })
       .then((user) => {
         if (!user) {
-          res.status(400).send(req.params.Username + " was not found");
+          res.status(400).send(username + " was not found");
         } else {
-          res.status(200).send(req.params.Username + " was deleted.");
+          res.status(200).send(username + " was deleted.");
         }
       })
       .catch((err) => {
