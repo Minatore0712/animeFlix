@@ -20,7 +20,7 @@ app.listen(port, "0.0.0.0", () => {
   console.log("Listening on Port " + port);
 });
 
-let allowedOrigins = ["http://localhost:7070", "http://localhost:1234", "https://anime-flix-reloaded.netlify.app"];
+let allowedOrigins = ["http://localhost:7070", "http://localhost:1234", "http://localhost:4200", "https://anime-flix-reloaded.netlify.app"];
 
 app.use(
   cors({
